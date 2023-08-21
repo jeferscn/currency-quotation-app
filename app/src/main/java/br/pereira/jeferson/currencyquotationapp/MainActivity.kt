@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var fromCurrency: String
     private lateinit var toCurrency: String
+    private lateinit var currencyQuotationCode: String
+    private lateinit var currencyQuotationValue: String
     var currenciesList: LinkedHashMap<*, *> = linkedMapOf<String, String>()
     var currenciesSymbolsArray: ArrayList<String> = arrayListOf()
     var currencyQuotationHashMap: LinkedHashMap<*, *> = linkedMapOf<String, String>()
-    private lateinit var currencyQuotationCode: String
-    private lateinit var currencyQuotationValue: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +50,7 @@ class MainActivity : AppCompatActivity() {
             setCurrencyQuotationTextInfo()
         }
 
-        fromCurrency = binding.textSearchableSpinnerFromCurrency.text.toString()
-        toCurrency = binding.textSearchableSpinnerToCurrency.text.toString()
+        configureSwapValues()
     }
 
     private fun getCurrenciesList(onResponseCallback: OnResponseCallback? = null) {
@@ -64,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                     val gson = Gson()
                     currenciesList = gson.fromJson(response.body()?.string().toString(), LinkedHashMap::class.java)
                     currenciesList.forEach {
-                        currenciesSymbolsArray.add(it.key.toString().uppercase())
+                        currenciesSymbolsArray.add("${it.key.toString().uppercase()} - ${it.value}")
                     }
                     onResponseCallback?.execute()
                 }
@@ -133,8 +132,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getCurrencyQuotation(onResponseCallback: OnResponseCallback? = null) {
         binding.buttonSearchCurrencyQuotation.setOnClickListener {
-            fromCurrency = binding.textSearchableSpinnerFromCurrency.text.toString()
-            toCurrency = binding.textSearchableSpinnerToCurrency.text.toString()
+            fromCurrency = binding.textSearchableSpinnerFromCurrency.text.toString().takeCoinCode()
+            toCurrency = binding.textSearchableSpinnerToCurrency.text.toString().takeCoinCode()
+
             if (fromCurrency.isNotBlank() && toCurrency.isNotBlank()) {
                 val call = Network.create()
 
@@ -185,5 +185,17 @@ class MainActivity : AppCompatActivity() {
 
         binding.textCurrencyQuoteResult.text =
             HtmlCompat.fromHtml(stringMessage, 0)
+    }
+
+    private fun configureSwapValues() {
+        binding.imageIcSwapValues.setOnClickListener {
+            val textFromCurrency = binding.textSearchableSpinnerFromCurrency.text.toString()
+            binding.textSearchableSpinnerFromCurrency.text = binding.textSearchableSpinnerToCurrency.text
+            binding.textSearchableSpinnerToCurrency.text = textFromCurrency
+        }
+    }
+
+    private fun String.takeCoinCode(): String {
+        return this.split(" -")[0]
     }
 }

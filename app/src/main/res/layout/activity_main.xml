@@ -7,6 +7,7 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:gravity="bottom"
+    android:background="@color/white"
     android:padding="4dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -38,9 +39,18 @@
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"
             android:hint="From Currency"
-            android:padding="12dp"
+            android:padding="16dp"
             android:layout_marginBottom="16dp"
             app:drawableEndCompat="@android:drawable/arrow_down_float" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_ic_swap_values"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:paddingVertical="6dp"
+            android:scaleType="fitCenter"
+            android:rotation="90"
+            android:src="@drawable/ic_swap_values"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -56,7 +66,7 @@
             android:background="@android:drawable/editbox_background"
             android:hint="To Currency"
             android:layout_marginBottom="40dp"
-            android:padding="12dp"
+            android:padding="16dp"
             app:drawableEndCompat="@android:drawable/arrow_down_float" />
 
         <com.google.android.material.button.MaterialButton
@@ -64,6 +74,7 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#007E00"
+            android:paddingVertical="14dp"
             android:text="Search"
             android:layout_marginBottom="40dp"
             android:textColor="@color/white"
