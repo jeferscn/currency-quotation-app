@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         val listView: ListView = dialog.findViewById(R.id.list_view)
 
         val adapter =
-            ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, currenciesSymbolsArray)
+            ArrayAdapter(this@MainActivity, R.layout.adapter_simple_spinner_searchable, currenciesSymbolsArray)
 
         listView.adapter = adapter
         editText.addTextChangedListener(object : TextWatcher {
@@ -113,6 +113,8 @@ class MainActivity : AppCompatActivity() {
 
                 dialog.dismiss()
             }
+
+        editText.requestFocus()
     }
 
     private fun createCurrencyDialog(): Dialog {
@@ -178,10 +180,10 @@ class MainActivity : AppCompatActivity() {
         val nf = NumberFormat.getInstance(Locale("BR"))
         quotationValue = nf.format(quotationValue.toDoubleOrNull() ?: 0)
 
-        val stringMessage = "Today<br>" +
+        val stringMessage = "<span style='color:#000000'>Today</span><br>" +
             "<span style='color:#007E00'>1</span> $fromCurrency<br>" +
-            "=<br>" +
-            "<span style='color:#007E00'>$quotationValue</span> ${currencyQuotationCode.uppercase()}"
+            "<span style='color:#000000'>=</span><br>" +
+            "<span style='color:#007E00'>$quotationValue</span> <span style='color:#000000'>${currencyQuotationCode.uppercase()}</span>"
 
         binding.textCurrencyQuoteResult.text =
             HtmlCompat.fromHtml(stringMessage, 0)
