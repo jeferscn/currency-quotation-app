@@ -110,6 +110,8 @@ class MainActivity : AppCompatActivity() {
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 textView.text = adapter.getItem(position)
+                textView.setTextColor(getColor(R.color.black))
+                textView.setHintTextColor(getColor(R.color.black))
 
                 dialog.dismiss()
             }
