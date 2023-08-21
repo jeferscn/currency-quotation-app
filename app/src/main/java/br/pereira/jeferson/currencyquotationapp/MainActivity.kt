@@ -113,8 +113,6 @@ class MainActivity : AppCompatActivity() {
 
                 dialog.dismiss()
             }
-
-        editText.requestFocus()
     }
 
     private fun createCurrencyDialog(): Dialog {
