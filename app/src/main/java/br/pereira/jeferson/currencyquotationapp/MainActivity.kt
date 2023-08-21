@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.apply {
+            title = "Currency Quotation App"
+        }
 
         getCurrenciesList {
             setSpinnersCurrenciesList()
@@ -93,11 +96,9 @@ class MainActivity : AppCompatActivity() {
         val editText: EditText = dialog.findViewById(R.id.edit_text)
         val listView: ListView = dialog.findViewById(R.id.list_view)
 
-        // Initialize array adapter
         val adapter =
             ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, currenciesSymbolsArray)
 
-        // set adapter
         listView.adapter = adapter
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -109,11 +110,8 @@ class MainActivity : AppCompatActivity() {
         })
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
-                // when item selected from list
-                // set selected item on textView
                 textView.text = adapter.getItem(position)
 
-                // Dismiss dialog
                 dialog.dismiss()
             }
     }
