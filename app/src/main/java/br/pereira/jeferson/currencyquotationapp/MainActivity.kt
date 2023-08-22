@@ -34,6 +34,13 @@ class MainActivity : AppCompatActivity() {
     var currenciesSymbolsArray: ArrayList<String> = arrayListOf()
     var currencyQuotationHashMap: LinkedHashMap<*, *> = linkedMapOf<String, String>()
 
+    companion object {
+        private const val STRING_MESSAGE_QUOTATION_RESULT = "<span style='color:#000000'>Today</span><br>" +
+            "<span style='color:#007E00'>1</span> %s<br>" +
+            "<span style='color:#000000'>=</span><br>" +
+            "<span style='color:#007E00'>%s</span> <span style='color:#000000'>%s</span>"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -148,7 +155,8 @@ class MainActivity : AppCompatActivity() {
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                         if (response.isSuccessful) {
                             val gson = Gson()
-                            currencyQuotationHashMap = gson.fromJson(response.body()?.string().toString(), LinkedHashMap::class.java)
+                            currencyQuotationHashMap =
+                                gson.fromJson(response.body()?.string().toString(), LinkedHashMap::class.java)
                             currencyQuotationHashMap.forEach {
                                 if (it.key.toString().equals(toCurrency, ignoreCase = true)) {
                                     currencyQuotationValue = it.value.toString()
@@ -163,7 +171,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        onResponseCallback?.execute() }
+                        onResponseCallback?.execute()
+                    }
                 })
             } else {
                 Toast.makeText(
@@ -178,26 +187,41 @@ class MainActivity : AppCompatActivity() {
     private fun setCurrencyQuotationTextInfo() {
         var quotationValue = currencyQuotationValue
         val nf = NumberFormat.getInstance(Locale("BR"))
+        nf.maximumFractionDigits = 20
         quotationValue = nf.format(quotationValue.toDoubleOrNull() ?: 0)
 
-        val stringMessage = "<span style='color:#000000'>Today</span><br>" +
-            "<span style='color:#007E00'>1</span> $fromCurrency<br>" +
-            "<span style='color:#000000'>=</span><br>" +
-            "<span style='color:#007E00'>$quotationValue</span> <span style='color:#000000'>${currencyQuotationCode.uppercase()}</span>"
+        val stringMessage =
+            STRING_MESSAGE_QUOTATION_RESULT.format(
+                fromCurrency,
+                quotationValue,
+                currencyQuotationCode.uppercase(),
+            )
 
         binding.textCurrencyQuoteResult.text =
             HtmlCompat.fromHtml(stringMessage, 0)
     }
 
     private fun configureSwapValues() {
-        binding.imageIcSwapValues.setOnClickListener {
+        binding.linearLayoutIcSwapValues.setOnClickListener {
             val textFromCurrency = binding.textSearchableSpinnerFromCurrency.text.toString()
-            binding.textSearchableSpinnerFromCurrency.text = binding.textSearchableSpinnerToCurrency.text
-            binding.textSearchableSpinnerToCurrency.text = textFromCurrency
+            binding.textSearchableSpinnerFromCurrency.apply {
+                text = binding.textSearchableSpinnerToCurrency.text
+                setTextColorAndHintColor()
+            }
+
+            binding.textSearchableSpinnerToCurrency.apply {
+                text = textFromCurrency
+                setTextColorAndHintColor()
+            }
         }
     }
 
     private fun String.takeCoinCode(): String {
         return this.split(" -")[0]
+    }
+
+    private fun TextView.setTextColorAndHintColor() {
+        setTextColor(getColor(R.color.black))
+        setHintTextColor(getColor(R.color.black))
     }
 }

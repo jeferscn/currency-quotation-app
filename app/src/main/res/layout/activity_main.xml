@@ -4,84 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:gravity="bottom"
     android:background="@color/white"
-    android:padding="4dp">
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="4dp"
+    tools:context=".MainActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_currency_quote_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="1 BTC \n= \n5.41 BRL"
-            android:textStyle="bold"
+            android:layout_marginBottom="110dp"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24dp"
-            android:textAlignment="center"
-            android:layout_marginBottom="110dp"/>
+            android:textStyle="bold"
+            tools:text="1 BTC \n= \n5.41 BRL" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="From"
-            android:textColor="@color/black"
+            android:layout_marginStart="4dp"
             android:layout_marginBottom="-6dp"
-            android:layout_marginStart="4dp" />
+            android:text="From"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/text_searchable_spinner_from_currency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"
-            android:hint="From Currency"
-            android:textColorHint="#151515"
-            android:padding="16dp"
             android:layout_marginBottom="16dp"
+            android:background="@android:drawable/editbox_background"
+            android:hint="Ex.: BRL"
+            android:padding="16dp"
+            android:textColorHint="#151515"
             app:drawableEndCompat="@android:drawable/arrow_down_float" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_ic_swap_values"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_ic_swap_values"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:paddingVertical="6dp"
-            android:scaleType="fitCenter"
-            android:rotation="90"
-            android:src="@drawable/ic_swap_values"/>
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:paddingVertical="6dp"
+                android:rotation="90"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_swap_values" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="To"
-            android:textColor="@color/black"
+            android:layout_marginStart="4dp"
             android:layout_marginBottom="-6dp"
-            android:layout_marginStart="4dp" />
+            android:text="To"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/text_searchable_spinner_to_currency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"
-            android:hint="To Currency"
-            android:textColorHint="#151515"
             android:layout_marginBottom="40dp"
+            android:background="@android:drawable/editbox_background"
+            android:hint="Ex.: USD"
             android:padding="16dp"
+            android:textColorHint="#151515"
             app:drawableEndCompat="@android:drawable/arrow_down_float" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_search_currency_quotation"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
             android:backgroundTint="#007E00"
             android:paddingVertical="14dp"
             android:text="Search"
-            android:layout_marginBottom="40dp"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:cornerRadius="4dp" />
